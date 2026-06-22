@@ -1,0 +1,63 @@
+# ─── Environment & secrets ───────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ─── Vendor & dependencies ───────────────────────────────────
+/vendor/
+/node_modules/
+
+# ─── Laravel generated / cache ───────────────────────────────
+/bootstrap/cache/*.php
+/storage/framework/cache/
+/storage/framework/sessions/
+/storage/framework/testing/
+/storage/framework/views/
+/storage/logs/
+!storage/framework/cache/.gitkeep
+!storage/framework/sessions/.gitkeep
+!storage/framework/testing/.gitkeep
+!storage/framework/views/.gitkeep
+!storage/logs/.gitkeep
+
+# ─── Public build output (Vite / Mix) ────────────────────────
+/public/build/
+/public/hot
+/public/storage       # symlink
+
+# ─── User uploads ────────────────────────────────────────────
+/storage/app/public/
+!storage/app/public/.gitkeep
+
+# ─── Testing ─────────────────────────────────────────────────
+.phpunit.result.cache
+coverage/
+.php-cs-fixer.cache
+
+# ─── IDE & editor ────────────────────────────────────────────
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
+
+# ─── OS generated ────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Desktop.ini
+
+# ─── Misc ────────────────────────────────────────────────────
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+*.cache
+.sass-cache/
