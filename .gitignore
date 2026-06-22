@@ -44,6 +44,7 @@ coverage/
 *.sw?
 .DS_Store
 Thumbs.db
+*.session.sql
 
 # ─── OS generated ────────────────────────────────────────────
 .DS_Store
