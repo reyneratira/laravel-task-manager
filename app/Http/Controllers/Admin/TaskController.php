@@ -11,12 +11,8 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-
 class TaskController extends Controller
 {
-    use AuthorizesRequests;
-
     public function __construct()
     {
         // Policy diterapkan di tiap method
