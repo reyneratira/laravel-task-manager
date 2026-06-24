@@ -10,7 +10,7 @@ class TaskPolicy
     /** Admin bisa lihat semua tugas, user hanya tugasnya sendiri */
     public function view(User $user, Task $task): bool
     {
-        return $user->id === $task->user_id;
+        return $user->isAdmin() || $task->assigned_to === $user->id;
     }
 
     /** Hanya admin yang bisa buat tugas baru */
