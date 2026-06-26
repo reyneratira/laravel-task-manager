@@ -5,12 +5,14 @@ namespace App\Models;
 use App\Enums\TaskStatus;
 use App\Enums\TaskPriority;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @property \Illuminate\Support\Carbon|null $due_date
  */
 class Task extends Model
 {
+    use SoftDeletes;
     protected $fillable = [
         'title',
         'description',
@@ -26,6 +28,16 @@ class Task extends Model
         'status' => TaskStatus::class,
         'priority' => TaskPriority::class,
     ];
+
+    public function assignee()
+    {
+        return $this->belongsTo(User::class, 'assigned_to');
+    }
+
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 
     public function scopeForUser($query, int $userId)
     {

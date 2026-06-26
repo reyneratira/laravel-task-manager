@@ -28,4 +28,9 @@ enum TaskStatus: string
             self::Cancelled => 'red',
         };
     }
+
+    public function isClosed(): bool
+    {
+        return in_array($this, [self::Done, self::Cancelled]);
+    }
 }
