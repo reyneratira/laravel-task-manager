@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Enums\TaskPriority;
 use App\Enums\TaskStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Task;
@@ -16,7 +17,7 @@ class TaskController extends Controller
     {
         $tasks = Task::forUser(auth()->id())
             ->when($request->status, fn($q) => $q->byStatus(TaskStatus::from($request->status)))
-            ->when($request->priority, fn($q) => $q->byPriority($request->priority))
+            ->when($request->priority, fn($q) => $q->byPriority(TaskPriority::from($request->priority)))
             ->latest('due_date')
             ->paginate(10)
             ->withQueryString();

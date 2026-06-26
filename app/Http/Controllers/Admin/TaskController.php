@@ -31,7 +31,7 @@ class TaskController extends Controller
             ->paginate(15)
             ->withQueryString();
 
-        $users = User::scopeRegularUsers(User::query())->get(['id', 'name']);
+        $users = User::regularUsers()->get(['id', 'name']);
 
         return view('admin.tasks.index', compact('tasks', 'users'));
     }
