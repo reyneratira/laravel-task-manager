@@ -7,6 +7,12 @@ use App\Models\Task;
 
 class TaskPolicy
 {
+    /** Admin bisa melihat daftar semua tugas */
+    public function viewAny(User $user): bool
+    {
+        return $user->isAdmin();
+    }
+
     /** Admin bisa lihat semua tugas, user hanya tugasnya sendiri */
     public function view(User $user, Task $task): bool
     {
