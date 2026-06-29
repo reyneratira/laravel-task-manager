@@ -1,0 +1,20 @@
+$kind: http-request
+url: "{{base_url}}/tasks?status=&priority=&search=&per_page=15"
+method: GET
+headers:
+  Accept: application/json
+  Authorization: Bearer {{token}}
+queryParams:
+  status: ""
+  priority: ""
+  search: ""
+  per_page: "15"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status 200', () => pm.response.to.have.status(200));
+      pm.test('Has data array', () => {
+          pm.expect(pm.response.json().data).to.be.an('array');
+      });
+    language: text/javascript
+order: 1000

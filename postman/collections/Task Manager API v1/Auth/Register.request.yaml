@@ -1,0 +1,26 @@
+$kind: http-request
+url: "{{base_url}}/register"
+method: POST
+headers:
+  Accept: application/json
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+        "name": "Test User",
+        "email": "test@example.com",
+        "password": "password123",
+        "password_confirmation": "password123"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status 201', () => pm.response.to.have.status(201));
+      pm.test('Has token', () => {
+          const json = pm.response.json();
+          pm.expect(json.token).to.be.a('string');
+          pm.collectionVariables.set('token', json.token);
+      });
+    language: text/javascript
+order: 1000

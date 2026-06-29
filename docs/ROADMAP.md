@@ -112,7 +112,7 @@
 ## Fase 4 — Frontend SPA Vue 3 (Backlog)
 
 ### Setup
-- 📋 Inisialisasi project Vue 3 + Vite (terpisah dari Laravel atau via Inertia.js)
+- 📋 Inisialisasi project Vue 3 + Vite (via Inertia.js)
 - 📋 Konfigurasi Axios dengan base URL dan interceptor token
 - 📋 Setup Pinia store: `useAuthStore`, `useTaskStore`
 - 📋 Vue Router dengan route guard berbasis role
