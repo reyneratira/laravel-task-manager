@@ -1,0 +1,24 @@
+$kind: http-request
+url: "{{base_url}}/login"
+method: POST
+headers:
+  Accept: application/json
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+        "email": "budi@taskmanager.test",
+        "password": "",
+        "device_name": "Postman"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status 200', () => pm.response.to.have.status(200));
+      pm.test('Save token', () => {
+          const json = pm.response.json();
+          pm.collectionVariables.set('token', json.token);
+      });
+    language: text/javascript
+order: 3000

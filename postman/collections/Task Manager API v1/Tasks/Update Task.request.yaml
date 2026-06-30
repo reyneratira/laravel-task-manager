@@ -1,0 +1,24 @@
+$kind: http-request
+url: "{{base_url}}/tasks/1"
+method: PUT
+headers:
+  Accept: application/json
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+body:
+  type: text
+  content: |-
+    {
+        "title": "Judul diperbarui",
+        "status": "in_progress",
+        "priority": "medium"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status 200', () => pm.response.to.have.status(200));
+      pm.test('Updated', () => {
+          pm.expect(pm.response.json().message).to.include('diperbarui');
+      });
+    language: text/javascript
+order: 4000
