@@ -71,11 +71,11 @@
 ## Fase 2 — Notifikasi & Export (Backlog)
 
 ### Email Notifikasi
-- 📋 `TaskAssigned` Mailable — kirim email saat tugas di-assign
-- 📋 `TaskDeadlineReminder` Mailable — reminder H-1 deadline
-- 📋 Queue job `SendTaskNotification`
-- 📋 Konfigurasi `MAIL_*` di `.env.example`
-- 📋 Feature test untuk notifikasi email
+- ✅ `TaskAssigned` dan `TaskUnassigned` Mailable — kirim email saat tugas di-assign/dihapus
+- ✅ `TaskDeadlineReminder` Mailable — reminder H-1 deadline
+- ❌ Queue job `SendTaskNotification` (Diganti dengan native `ShouldQueue` pada Mailable)
+- ✅ Konfigurasi `MAIL_*` di `.env.example`
+- ✅ Feature test untuk notifikasi email
 
 ### Real-time Notification
 - 📋 Install Laravel Reverb
