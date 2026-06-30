@@ -1,0 +1,5 @@
+$kind: collection
+description: REST API untuk Task Manager Laravel. Gunakan variable {{base_url}} dan {{token}} yang sudah dikonfigurasi.
+variables:
+  base_url: http://localhost:8000/api/v1
+  token: ""

@@ -1,0 +1,29 @@
+$kind: http-request
+url: "{{base_url}}/tasks"
+method: POST
+headers:
+  Accept: application/json
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+body:
+  type: text
+  content: |-
+    {
+        "title": "Setup environment development",
+        "description": "Install dependencies dan konfigurasi .env",
+        "status": "pending",
+        "priority": "high",
+        "due_date": "2026-12-31",
+        "assigned_to": 2
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status 201', () => pm.response.to.have.status(201));
+      pm.test('Has task data', () => {
+          const json = pm.response.json();
+          pm.expect(json.data).to.have.property('id');
+          pm.expect(json.data).to.have.property('title');
+      });
+    language: text/javascript
+order: 2000
