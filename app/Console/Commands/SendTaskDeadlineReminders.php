@@ -44,7 +44,7 @@ class SendTaskDeadlineReminders extends Command
         foreach ($tasks as $task) {
             if ($task->assignee) {
                 Mail::to($task->assignee)->queue(new TaskDeadlineReminder($task));
-                
+
                 // Mark as sent to ensure idempotency. Use saveQuietly to skip observer and fillable checks.
                 $task->reminder_sent_at = now();
                 $task->saveQuietly();
