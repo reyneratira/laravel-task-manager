@@ -23,7 +23,7 @@ class ExportTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    // ─── 1. Admin can export tasks via Web (Excel/CSV fallback) ─────────────
+    // ─── 1. Admin can export tasks via Web in Excel format ──────────────────
     public function test_admin_can_export_tasks_via_web(): void
     {
         Task::factory()->count(3)->create(['created_by' => $this->admin->id]);
@@ -32,6 +32,7 @@ class ExportTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertHeader('Content-Disposition');
+        $this->assertStringContainsString('attachment; filename=tugas-admin.xlsx', $response->headers->get('Content-Disposition'));
     }
 
     // ─── 2. Admin can export tasks report PDF via Web ───────────────────────
@@ -56,7 +57,7 @@ class ExportTest extends TestCase
         $responsePdf->assertStatus(403);
     }
 
-    // ─── 4. User can export tasks via API in Excel/CSV format ───────────────
+    // ─── 4. User can export tasks via API in Excel format ───────────────────
     public function test_user_can_export_tasks_via_api_excel(): void
     {
         Task::factory()->count(2)->create([
@@ -70,6 +71,7 @@ class ExportTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertHeader('Content-Disposition');
+        $this->assertStringContainsString('attachment; filename=tugas.xlsx', $response->headers->get('Content-Disposition'));
     }
 
     // ─── 5. User can export tasks via API in PDF format ─────────────────────

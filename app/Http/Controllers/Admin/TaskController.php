@@ -47,10 +47,7 @@ class TaskController extends Controller
 
         $filters = $request->only(['status', 'priority', 'user_id', 'search']);
 
-        $extension = extension_loaded('zip') ? 'xlsx' : 'csv';
-        $format = extension_loaded('zip') ? \Maatwebsite\Excel\Excel::XLSX : \Maatwebsite\Excel\Excel::CSV;
-
-        return Excel::download(new TaskExport($filters), 'tugas-admin.' . $extension, $format);
+        return Excel::download(new TaskExport($filters), 'tugas-admin.xlsx');
     }
 
     /** Export tugas ke PDF */

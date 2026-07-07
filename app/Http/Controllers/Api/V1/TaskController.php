@@ -57,10 +57,7 @@ class TaskController extends Controller
             return $pdf->download('tugas.pdf');
         }
 
-        $extension = extension_loaded('zip') ? 'xlsx' : 'csv';
-        $excelFormat = extension_loaded('zip') ? \Maatwebsite\Excel\Excel::XLSX : \Maatwebsite\Excel\Excel::CSV;
-
-        return Excel::download(new TaskExport($filters), 'tugas.' . $extension, $excelFormat);
+        return Excel::download(new TaskExport($filters), 'tugas.xlsx');
     }
 
     /**
