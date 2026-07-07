@@ -78,10 +78,10 @@
 - ✅ Feature test untuk notifikasi email
 
 ### Real-time Notification
-- 📋 Install Laravel Reverb
-- 📋 `TaskStatusChanged` broadcast event
-- 📋 Frontend listener (Echo + WebSocket)
-- 📋 Badge notifikasi di navbar
+- ✅ Install Laravel Reverb
+- ✅ `TaskStatusChanged` broadcast event
+- ✅ Frontend listener (Echo + WebSocket)
+- ✅ Badge notifikasi di navbar
 
 ### Export
 - 📋 Install Maatwebsite Laravel Excel
