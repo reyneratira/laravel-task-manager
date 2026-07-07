@@ -12,9 +12,57 @@ use App\Models\Task;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use App\Exports\TaskExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class TaskController extends Controller
 {
+    /**
+     * Export tasks.
+     * Admin sees all tasks (optionally filtered by user_id).
+     * Regular user sees only their own tasks.
+     */
+    public function export(Request $request)
+    {
+        // Cek token ability
+        if ($request->user()->tokenCant('tasks:read')) {
+            abort(403, 'Token tidak memiliki izin untuk melihat tugas.');
+        }
+
+        $filters = $request->only(['status', 'priority', 'search']);
+
+        // Jika bukan admin, paksa filter ke tugas miliknya sendiri
+        if (! $request->user()->isAdmin()) {
+            $filters['user_id'] = $request->user()->id;
+        } else {
+            // Admin bisa filter by user_id
+            if ($request->has('user_id')) {
+                $filters['user_id'] = $request->input('user_id');
+            }
+        }
+
+        $format = $request->input('format', 'excel');
+
+        if ($format === 'pdf') {
+            $tasks = Task::with(['assignee', 'creator'])
+                ->when(isset($filters['status']) && $filters['status'], fn($q) => $q->byStatus(TaskStatus::from($filters['status'])))
+                ->when(isset($filters['priority']) && $filters['priority'], fn($q) => $q->byPriority(TaskPriority::from($filters['priority'])))
+                ->when(isset($filters['user_id']) && $filters['user_id'], fn($q) => $q->forUser($filters['user_id']))
+                ->when(isset($filters['search']) && $filters['search'], fn($q) => $q->where('title', 'like', "%{$filters['search']}%"))
+                ->latest()
+                ->get();
+
+            $pdf = Pdf::loadView('admin.tasks.report-pdf', compact('tasks'));
+            return $pdf->download('tugas.pdf');
+        }
+
+        $extension = extension_loaded('zip') ? 'xlsx' : 'csv';
+        $excelFormat = extension_loaded('zip') ? \Maatwebsite\Excel\Excel::XLSX : \Maatwebsite\Excel\Excel::CSV;
+
+        return Excel::download(new TaskExport($filters), 'tugas.' . $extension, $excelFormat);
+    }
+
     /**
      * Daftar tugas. Admin melihat semua, user hanya tugasnya sendiri.
      */
