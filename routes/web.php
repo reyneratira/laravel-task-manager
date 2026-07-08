@@ -45,6 +45,10 @@ Route::middleware('auth')->group(function () {
                 ->name('dashboard');
 
             // Manajemen Tugas (full CRUD)
+            Route::get('tasks/export', [AdminTaskController::class, 'export'])
+                ->name('tasks.export');
+            Route::get('tasks/report-pdf', [AdminTaskController::class, 'reportPdf'])
+                ->name('tasks.report-pdf');
             Route::resource('tasks', AdminTaskController::class);
             Route::patch('tasks/{id}/restore', [AdminTaskController::class, 'restore'])
                 ->name('tasks.restore');

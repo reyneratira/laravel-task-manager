@@ -84,11 +84,11 @@
 - ✅ Badge notifikasi di navbar
 
 ### Export
-- 📋 Install Maatwebsite Laravel Excel
-- 📋 `TaskExport` class dengan filter yang sama seperti di halaman list
-- 📋 Button "Export Excel" di halaman admin list tugas
-- 📋 `TaskReportPDF` menggunakan DomPDF
-- 📋 Endpoint `GET /api/v1/tasks/export` untuk download via API
+- ✅ Install Maatwebsite Laravel Excel
+- ✅ `TaskExport` class dengan filter yang sama seperti di halaman list
+- ✅ Button "Export Excel" di halaman admin list tugas
+- ✅ `TaskReportPDF` menggunakan DomPDF
+- ✅ Endpoint `GET /api/v1/tasks/export` untuk download via API
 
 ---
 

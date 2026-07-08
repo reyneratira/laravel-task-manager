@@ -11,6 +11,10 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\Exports\TaskExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 class TaskController extends Controller
 {
     public function __construct()
@@ -34,6 +38,33 @@ class TaskController extends Controller
         $users = User::regularUsers()->get(['id', 'name']);
 
         return view('admin.tasks.index', compact('tasks', 'users'));
+    }
+
+    /** Export tugas ke Excel */
+    public function export(Request $request)
+    {
+        $this->authorize('viewAny', Task::class);
+
+        $filters = $request->only(['status', 'priority', 'user_id', 'search']);
+
+        return Excel::download(new TaskExport($filters), 'tugas-admin.xlsx');
+    }
+
+    /** Export tugas ke PDF */
+    public function reportPdf(Request $request)
+    {
+        $this->authorize('viewAny', Task::class);
+
+        $tasks = Task::with(['assignee', 'creator'])
+            ->when($request->status, fn($q) => $q->byStatus(TaskStatus::from($request->status)))
+            ->when($request->priority, fn($q) => $q->byPriority(TaskPriority::from($request->priority)))
+            ->when($request->user_id, fn($q) => $q->forUser($request->user_id))
+            ->when($request->search, fn($q) => $q->where('title', 'like', "%{$request->search}%"))
+            ->latest()
+            ->get();
+
+        $pdf = Pdf::loadView('admin.tasks.report-pdf', compact('tasks'));
+        return $pdf->download('laporan-tugas.pdf');
     }
 
     /** Form buat tugas baru */
