@@ -64,6 +64,9 @@
                 {{-- Right: User info + logout --}}
                 @auth
                     <div class="flex items-center gap-4">
+                        {{-- Notification Bell --}}
+                        <x-notification-bell />
+
                         {{-- User name + role badge --}}
                         <div class="hidden sm:flex items-center gap-2">
                             <span class="text-sm text-gray-700 font-medium">{{ auth()->user()->name }}</span>

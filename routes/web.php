@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\TaskController as AdminTaskController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\User\TaskController as UserTaskController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
 
+    // ─── Notifikasi ───────────────────────────────────────────────────────
+    Route::get('/notifications', [NotificationController::class, 'index'])
+        ->name('notifications.index');
+    Route::patch('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])
+        ->name('notifications.read');
+    Route::post('/notifications/read-all', [NotificationController::class, 'markAllAsRead'])
+        ->name('notifications.read-all');
+
     // ─── Admin only ───────────────────────────────────────────────────────
     Route::middleware('admin')          // App\Http\Middleware\EnsureAdmin
         ->prefix('admin')
@@ -36,6 +45,10 @@ Route::middleware('auth')->group(function () {
                 ->name('dashboard');
 
             // Manajemen Tugas (full CRUD)
+            Route::get('tasks/export', [AdminTaskController::class, 'export'])
+                ->name('tasks.export');
+            Route::get('tasks/report-pdf', [AdminTaskController::class, 'reportPdf'])
+                ->name('tasks.report-pdf');
             Route::resource('tasks', AdminTaskController::class);
             Route::patch('tasks/{id}/restore', [AdminTaskController::class, 'restore'])
                 ->name('tasks.restore');

@@ -78,17 +78,17 @@
 - ✅ Feature test untuk notifikasi email
 
 ### Real-time Notification
-- 📋 Install Laravel Reverb
-- 📋 `TaskStatusChanged` broadcast event
-- 📋 Frontend listener (Echo + WebSocket)
-- 📋 Badge notifikasi di navbar
+- ✅ Install Laravel Reverb
+- ✅ `TaskStatusChanged` broadcast event
+- ✅ Frontend listener (Echo + WebSocket)
+- ✅ Badge notifikasi di navbar
 
 ### Export
-- 📋 Install Maatwebsite Laravel Excel
-- 📋 `TaskExport` class dengan filter yang sama seperti di halaman list
-- 📋 Button "Export Excel" di halaman admin list tugas
-- 📋 `TaskReportPDF` menggunakan DomPDF
-- 📋 Endpoint `GET /api/v1/tasks/export` untuk download via API
+- ✅ Install Maatwebsite Laravel Excel
+- ✅ `TaskExport` class dengan filter yang sama seperti di halaman list
+- ✅ Button "Export Excel" di halaman admin list tugas
+- ✅ `TaskReportPDF` menggunakan DomPDF
+- ✅ Endpoint `GET /api/v1/tasks/export` untuk download via API
 
 ---
 

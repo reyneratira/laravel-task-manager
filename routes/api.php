@@ -29,6 +29,7 @@ Route::prefix('v1')->group(function () {
         Route::post('/auth/logout-all', [AuthController::class, 'logoutAll']);
 
         // Tasks CRUD
+        Route::get('tasks/export', [TaskController::class, 'export']);
         Route::apiResource('tasks', TaskController::class);
     });
 });
