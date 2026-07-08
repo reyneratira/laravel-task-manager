@@ -119,4 +119,35 @@ class ExportTest extends TestCase
 
         $response->assertStatus(403);
     }
+
+    // ─── 8. Task export contains TERLAMBAT description for overdue tasks ────
+    // ─── 8. Task export contains TERLAMBAT title for overdue tasks ────
+    public function test_task_export_contains_terlambat_title_for_overdue_tasks(): void
+    {
+        $overdueTask = Task::factory()->create([
+            'title' => 'Overdue Task',
+            'description' => 'Test Desc',
+            'due_date' => now()->subDay(),
+            'status' => \App\Enums\TaskStatus::Pending,
+            'created_by' => $this->admin->id,
+        ]);
+
+        $normalTask = Task::factory()->create([
+            'title' => 'Normal Task',
+            'description' => 'Test Desc 2',
+            'due_date' => now()->addDay(),
+            'status' => \App\Enums\TaskStatus::Pending,
+            'created_by' => $this->admin->id,
+        ]);
+
+        $export = new \App\Exports\TaskExport();
+
+        $mappedOverdue = $export->map($overdueTask);
+        $mappedNormal = $export->map($normalTask);
+
+        $this->assertEquals('Overdue Task (TERLAMBAT)', $mappedOverdue[1]);
+        $this->assertEquals('Test Desc', $mappedOverdue[2]);
+        $this->assertEquals('Normal Task', $mappedNormal[1]);
+        $this->assertEquals('Test Desc 2', $mappedNormal[2]);
+    }
 }
