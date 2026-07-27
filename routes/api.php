@@ -31,5 +31,12 @@ Route::prefix('v1')->group(function () {
         // Tasks CRUD
         Route::get('tasks/export', [TaskController::class, 'export']);
         Route::apiResource('tasks', TaskController::class);
+
+        // Task Attachments
+        Route::get('tasks/{task}/attachments', [\App\Http\Controllers\Api\V1\TaskAttachmentController::class, 'index']);
+        Route::post('tasks/{task}/attachments', [\App\Http\Controllers\Api\V1\TaskAttachmentController::class, 'store']);
+        Route::get('attachments/{attachment}/download', [\App\Http\Controllers\Api\V1\TaskAttachmentController::class, 'download']);
+        Route::delete('attachments/{attachment}', [\App\Http\Controllers\Api\V1\TaskAttachmentController::class, 'destroy']);
     });
 });
+
