@@ -95,11 +95,11 @@
 ## Fase 3 — Kolaborasi (Backlog)
 
 ### Lampiran File
-- 📋 Migration tabel `task_attachments`
-- 📋 Model `TaskAttachment` dengan relasi ke `Task`
-- 📋 Upload via form (validasi tipe: pdf, jpg, png, docx — max 10MB)
-- 📋 Preview inline untuk file gambar
-- 📋 Endpoint API untuk upload dan download lampiran
+- ✅ Migration tabel `task_attachments`
+- ✅ Model `TaskAttachment` dengan relasi ke `Task`
+- ✅ Upload via form (validasi tipe: pdf, jpg, png, docx — max 10MB)
+- ✅ Preview inline untuk file gambar
+- ✅ Endpoint API untuk upload dan download lampiran
 
 ### Komentar
 - 📋 Migration tabel `comments` (polymorphic)
@@ -119,7 +119,7 @@
 
 ### Halaman
 - 📋 Login page
-- 📋 Dashboard (statistik dengan Chart.js / Recharts)
+- 📋 Dashboard (statistik)
 - 📋 List tugas (filter, search, pagination)
 - 📋 Form create/edit tugas
 - 📋 Detail tugas dengan komentar dan lampiran
