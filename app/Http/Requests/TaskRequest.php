@@ -27,6 +27,8 @@ class TaskRequest extends FormRequest
             'priority' => ['required', Rule::in($priorityValues)],
             'due_date' => ['nullable', 'date', 'after_or_equal:today'],
             'assigned_to' => ['nullable', 'exists:users,id'],
+            'attachments' => ['nullable', 'array'],
+            'attachments.*' => ['file', 'mimes:pdf,jpg,jpeg,png,docx,doc,xlsx,xls,zip', 'max:10240'],
         ];
     }
 
@@ -39,6 +41,10 @@ class TaskRequest extends FormRequest
             'priority.in' => 'Prioritas tidak valid.',
             'due_date.after_or_equal' => 'Tanggal deadline tidak boleh di masa lalu.',
             'assigned_to.exists' => 'User yang dipilih tidak ditemukan.',
+            'attachments.*.file' => 'Berkas yang diunggah tidak valid.',
+            'attachments.*.mimes' => 'Format lampiran harus berupa: pdf, jpg, jpeg, png, docx, doc, xlsx, xls, atau zip.',
+            'attachments.*.max' => 'Ukuran setiap lampiran tidak boleh melebihi 10MB.',
         ];
     }
+
 }
