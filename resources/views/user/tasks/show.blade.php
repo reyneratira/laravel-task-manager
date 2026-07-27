@@ -52,7 +52,11 @@
         @endif
     </div>
 
+    {{-- Lampiran File --}}
+    <x-attachment-section :task="$task" />
+
     {{-- Update Status Form --}}
+
     @if(!$task->status->isClosed())
         <div class="mt-6 bg-white rounded-xl border border-gray-200 p-6">
             <h2 class="text-sm font-semibold text-gray-800 mb-3">Perbarui Status</h2>
