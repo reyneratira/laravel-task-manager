@@ -72,7 +72,11 @@
         </div>
     </div>
 
+    {{-- Lampiran File --}}
+    <x-attachment-section :task="$task" />
+
     {{-- Hapus --}}
+
     <div class="mt-4">
         <form method="POST" action="{{ route('admin.tasks.destroy', $task) }}"
             onsubmit="return confirm('Hapus tugas ini?')">

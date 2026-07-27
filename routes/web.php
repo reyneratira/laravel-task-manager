@@ -34,6 +34,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/notifications/read-all', [NotificationController::class, 'markAllAsRead'])
         ->name('notifications.read-all');
 
+    // ─── Lampiran Task (Task Attachments) ─────────────────────────────────
+    Route::post('/tasks/{task}/attachments', [\App\Http\Controllers\TaskAttachmentController::class, 'store'])
+        ->name('tasks.attachments.store');
+    Route::get('/attachments/{attachment}/download', [\App\Http\Controllers\TaskAttachmentController::class, 'download'])
+        ->name('attachments.download');
+    Route::get('/attachments/{attachment}/preview', [\App\Http\Controllers\TaskAttachmentController::class, 'preview'])
+        ->name('attachments.preview');
+    Route::delete('/attachments/{attachment}', [\App\Http\Controllers\TaskAttachmentController::class, 'destroy'])
+        ->name('attachments.destroy');
+
     // ─── Admin only ───────────────────────────────────────────────────────
     Route::middleware('admin')          // App\Http\Middleware\EnsureAdmin
         ->prefix('admin')

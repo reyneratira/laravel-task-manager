@@ -8,10 +8,11 @@
     </div>
 
     <div class="bg-white rounded-xl border border-gray-200 p-6">
-        <form method="POST" action="{{ route('admin.tasks.store') }}" class="space-y-5">
+        <form method="POST" action="{{ route('admin.tasks.store') }}" enctype="multipart/form-data" class="space-y-5">
             @csrf
 
             {{-- Judul --}}
+
             <div>
                 <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Judul Tugas</label>
                 <input type="text" name="title" id="title" value="{{ old('title') }}"
@@ -94,7 +95,22 @@
                 </div>
             </div>
 
+            {{-- Lampiran File --}}
+            <div>
+                <label for="attachments" class="block text-sm font-medium text-gray-700 mb-1">Lampiran File (opsional)</label>
+                <input type="file" name="attachments[]" id="attachments" multiple
+                    class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer border border-gray-300 rounded-lg p-1" />
+                <p class="text-xs text-gray-400 mt-1">Anda dapat memilih satu atau beberapa berkas sekaligus. Format: PDF, JPG, PNG, DOCX, XLSX, ZIP (Maks. 10MB per file)</p>
+                @error('attachments')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @error('attachments.*')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
+                @enderror
+            </div>
+
             {{-- Tombol --}}
+
             <div class="flex items-center gap-3 pt-2">
                 <button type="submit"
                     class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-5 py-2.5 rounded-lg">

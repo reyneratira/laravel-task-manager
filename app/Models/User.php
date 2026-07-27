@@ -61,4 +61,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Task::class, 'assigned_to');
     }
+
+    /** Lampiran yang diunggah oleh user ini */
+    public function attachments(): HasMany
+    {
+        return $this->hasMany(TaskAttachment::class, 'user_id');
+    }
 }
+

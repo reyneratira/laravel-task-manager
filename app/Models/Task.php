@@ -40,6 +40,11 @@ class Task extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
+    public function attachments()
+    {
+        return $this->hasMany(TaskAttachment::class);
+    }
+
     public function scopeForUser($query, int $userId)
     {
         return $query->where('assigned_to', $userId);
