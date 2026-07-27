@@ -5,13 +5,16 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\TaskPriority;
 use App\Enums\TaskStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreTaskAttachmentRequest;
 use App\Http\Requests\TaskRequest;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 use App\Exports\TaskExport;
+
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -83,12 +86,34 @@ class TaskController extends Controller
         $data = $request->validated();
         $data['created_by'] = auth()->id();
 
-        Task::create($data);
+        $task = Task::create($data);
+
+        if ($request->hasFile('attachments')) {
+            foreach ($request->file('attachments') as $file) {
+                if ($file->isValid()) {
+                    $sanitizedFilename = StoreTaskAttachmentRequest::sanitizeFilename($file->getClientOriginalName());
+                    $extension = $file->getClientOriginalExtension();
+                    $uniqueStorageName = Str::uuid()->toString() . ($extension ? '.' . strtolower($extension) : '');
+                    $storageDir = 'attachments/tasks/' . $task->id;
+
+                    $path = $file->storeAs($storageDir, $uniqueStorageName, 'local');
+
+                    $task->attachments()->create([
+                        'user_id' => auth()->id(),
+                        'filename' => $sanitizedFilename,
+                        'path' => $path,
+                        'mime_type' => $file->getClientMimeType() ?: $file->getMimeType(),
+                        'size' => $file->getSize(),
+                    ]);
+                }
+            }
+        }
 
         return redirect()
             ->route('admin.tasks.index')
             ->with('success', 'Tugas berhasil dibuat!');
     }
+
 
     /** Detail satu tugas */
     public function show(Task $task): View
